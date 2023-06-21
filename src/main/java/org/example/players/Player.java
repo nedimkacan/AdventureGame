@@ -109,6 +109,7 @@ public class Player {
     }
     public void selectLoc(){
         while (true){
+            printInfo();
             Location location=null;
             Location[] locations={
                     new SafeHouse(this),
@@ -118,11 +119,15 @@ public class Player {
             for (Location loc:locations) {
                 System.out.println("Id: " + loc.getId() + "\tBölge Adı: " + loc.getName());
             }
+            System.out.println("0 Çıkış Yap");
             System.out.println("=========================================================================");
             System.out.print("Lütfen Id değerine göre bir bölge seçin: ");
             int selectLoc=input.nextInt();
             System.out.println("============================   Seçilen Bölge   ============================");
             switch (selectLoc){
+                case 0:
+                    location=null;
+                    break;
                 case 1:
                     location=new SafeHouse(this);
                     break;
@@ -132,6 +137,10 @@ public class Player {
                 default:
                     location=new SafeHouse(this);
                     break;
+            }
+            if (location == null) {
+                System.out.println("Bu karanlık ve sisli adadan çabuk vazgeçtin !");
+                break;
             }
             location.onLocation();
             if (!location.onLocation()){
@@ -147,10 +156,12 @@ public class Player {
     }
     public void printInfo(){
         System.out.println(
-                "Silahınız: " + this.getInventory().getWeapon().getName() +
-                "Hasarınız: " + this.getDamage() +
-                "Sağlığınız: " + this.getHealth() +
-                "Bakiyeniz: " + this.getMoney()
+                        "Silahınız: " + this.getInventory().getWeapon().getName() +
+                        "\tZırhınız: " + this.getInventory().getArmour().getName() +
+                        "\tBloklama" + this.getInventory().getArmour().getBlock() +
+                        "\tHasarınız: " + this.getDamage() +
+                        "\tSağlığınız: " + this.getHealth() +
+                        "\tBakiyeniz: " + this.getMoney()
         );
     }
 }
