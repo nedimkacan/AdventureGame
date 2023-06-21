@@ -11,9 +11,9 @@ public class Game {
         System.out.print("Oyuncu Adı: ");
         String playerName=input.nextLine();
         Player player=new Player(playerName);
-        System.out.println("Sayın " + player.getName() + " bu karanlık ve puslu adaya hoşgeldiniz !");
+        System.out.println("Sayın " + player.getName() + " adaya hoşgeldiniz !");
         System.out.println("Bu puslu ve karanlık adada yaşanan olaylar tümüyle gerçektir !");
         player.selectCharacter();
-
+        player.selectLoc();
     }
 }
