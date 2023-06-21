@@ -4,6 +4,11 @@ import org.example.characters.Character;
 import org.example.characters.chars.Archer;
 import org.example.characters.chars.Knight;
 import org.example.characters.chars.Samurai;
+import org.example.inventories.Inventory;
+import org.example.locations.Location;
+import org.example.locations.safeareas.NormalLoc;
+import org.example.locations.safeareas.areas.SafeHouse;
+import org.example.locations.safeareas.shop.ToolStore;
 
 import java.util.Scanner;
 
@@ -14,9 +19,19 @@ public class Player {
     private int damage;
     private int money;
     private String characterName;
+    private Inventory inventory;
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
 
     public Player(String name){
         this.name=name;
+        this.inventory=new Inventory();
     }
     public String getName() {
         return name;
@@ -35,7 +50,7 @@ public class Player {
     }
 
     public int getDamage() {
-        return damage;
+        return damage + this.getInventory().getWeapon().getDamage();
     }
 
     public void setDamage(int damage) {
@@ -86,15 +101,56 @@ public class Player {
                 break;
             default:
                 this.initPlayer(new Samurai());
-                System.out.println("Karakter seçilmedi");
+                System.out.println("Karakter seçilmediği veya hatalı id değeri girildiği için varsayılan karakter alındı !");
+                System.out.println("Karakter: "+this.getName()+"\tHasar: "+this.getDamage()+"\tSağlık: "+this.getHealth()+"\tPara: "+this.getMoney());
                 break;
         }
         System.out.println("=========================================================================");
+    }
+    public void selectLoc(){
+        while (true){
+            Location location=null;
+            Location[] locations={
+                    new SafeHouse(this),
+                    new ToolStore(this)
+            };
+            System.out.println("============================   Bölgeler   ============================");
+            for (Location loc:locations) {
+                System.out.println("Id: " + loc.getId() + "\tBölge Adı: " + loc.getName());
+            }
+            System.out.println("=========================================================================");
+            System.out.print("Lütfen Id değerine göre bir bölge seçin: ");
+            int selectLoc=input.nextInt();
+            System.out.println("============================   Seçilen Bölge   ============================");
+            switch (selectLoc){
+                case 1:
+                    location=new SafeHouse(this);
+                    break;
+                case 2:
+                    location=new ToolStore(this);
+                    break;
+                default:
+                    location=new SafeHouse(this);
+                    break;
+            }
+            location.onLocation();
+            if (!location.onLocation()){
+                System.out.println("Game Over Öldünüz !");
+            }
+        }
     }
     public void initPlayer(Character character){
         this.setName(character.getName());
         this.setDamage(character.getDamage());
         this.setHealth(character.getHealth());
         this.setMoney(character.getMoney());
+    }
+    public void printInfo(){
+        System.out.println(
+                "Silahınız: " + this.getInventory().getWeapon().getName() +
+                "Hasarınız: " + this.getDamage() +
+                "Sağlığınız: " + this.getHealth() +
+                "Bakiyeniz: " + this.getMoney()
+        );
     }
 }
