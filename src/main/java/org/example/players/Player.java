@@ -6,6 +6,9 @@ import org.example.characters.chars.Knight;
 import org.example.characters.chars.Samurai;
 import org.example.inventories.Inventory;
 import org.example.locations.Location;
+import org.example.locations.battleareas.areas.Cave;
+import org.example.locations.battleareas.areas.Forest;
+import org.example.locations.battleareas.areas.River;
 import org.example.locations.safeareas.NormalLoc;
 import org.example.locations.safeareas.areas.SafeHouse;
 import org.example.locations.safeareas.shop.ToolStore;
@@ -113,7 +116,10 @@ public class Player {
             Location location=null;
             Location[] locations={
                     new SafeHouse(this),
-                    new ToolStore(this)
+                    new ToolStore(this),
+                    new Cave(this),
+                    new Forest(this),
+                    new River(this)
             };
             System.out.println("============================   Bölgeler   ============================");
             for (Location loc:locations) {
@@ -134,15 +140,22 @@ public class Player {
                 case 2:
                     location=new ToolStore(this);
                     break;
-                default:
-                    location=new SafeHouse(this);
+                case 3:
+                    location=new Cave(this);
                     break;
+                case 4:
+                    location=new Forest(this);
+                    break;
+                case 5:
+                    location=new River(this);
+                    break;
+                default:
+                    System.out.println("Lütfen geçerli bir bölge id'değeri giriniz !");
             }
             if (location == null) {
                 System.out.println("Bu karanlık ve sisli adadan çabuk vazgeçtin !");
                 break;
             }
-            location.onLocation();
             if (!location.onLocation()){
                 System.out.println("Game Over Öldünüz !");
             }
@@ -158,7 +171,7 @@ public class Player {
         System.out.println(
                         "Silahınız: " + this.getInventory().getWeapon().getName() +
                         "\tZırhınız: " + this.getInventory().getArmour().getName() +
-                        "\tBloklama" + this.getInventory().getArmour().getBlock() +
+                        "\tBloklama: " + this.getInventory().getArmour().getBlock() +
                         "\tHasarınız: " + this.getDamage() +
                         "\tSağlığınız: " + this.getHealth() +
                         "\tBakiyeniz: " + this.getMoney()
