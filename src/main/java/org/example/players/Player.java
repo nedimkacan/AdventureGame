@@ -23,6 +23,7 @@ public class Player {
     private int money;
     private String characterName;
     private Inventory inventory;
+    private int originalHealth;
 
     public Inventory getInventory() {
         return inventory;
@@ -49,11 +50,17 @@ public class Player {
     }
 
     public void setHealth(int health) {
+        if (health<0){
+            health=0;
+        }
         this.health = health;
     }
 
-    public int getDamage() {
+    public int getTotalDamage(){
         return damage + this.getInventory().getWeapon().getDamage();
+    }
+    public int getDamage() {
+        return damage;
     }
 
     public void setDamage(int damage) {
@@ -75,6 +82,15 @@ public class Player {
     public void setCharacterName(String characterName) {
         this.characterName = characterName;
     }
+
+    public int getOriginalHealth() {
+        return originalHealth;
+    }
+
+    public void setOriginalHealth(int originalHealth) {
+        this.originalHealth = originalHealth;
+    }
+
     public void selectCharacter(){
         System.out.println("============================   Karakterler   ============================");
         Character[] characters={
@@ -164,6 +180,7 @@ public class Player {
     public void initPlayer(Character character){
         this.setName(character.getName());
         this.setDamage(character.getDamage());
+        this.setOriginalHealth(character.getHealth());
         this.setHealth(character.getHealth());
         this.setMoney(character.getMoney());
     }
@@ -172,7 +189,7 @@ public class Player {
                         "Silahınız: " + this.getInventory().getWeapon().getName() +
                         "\tZırhınız: " + this.getInventory().getArmour().getName() +
                         "\tBloklama: " + this.getInventory().getArmour().getBlock() +
-                        "\tHasarınız: " + this.getDamage() +
+                        "\tHasarınız: " + this.getTotalDamage() +
                         "\tSağlığınız: " + this.getHealth() +
                         "\tBakiyeniz: " + this.getMoney()
         );
