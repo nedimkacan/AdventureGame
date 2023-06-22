@@ -34,7 +34,7 @@ public abstract class BattleLoc extends Location {
             System.out.println("Öldünüz !");
             return false;
         }
-        return true;
+        return false;
     }
     public boolean combat(int obsNumber){
         for (int i = 1; i < obsNumber ; i++) {

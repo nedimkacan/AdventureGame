@@ -119,9 +119,7 @@ public class Player {
                 System.out.println("Karakter: "+this.getName()+"\tHasar: "+this.getDamage()+"\tSağlık: "+this.getHealth()+"\tPara: "+this.getMoney());
                 break;
             default:
-                this.initPlayer(new Samurai());
-                System.out.println("Karakter seçilmediği veya hatalı id değeri girildiği için varsayılan karakter alındı !");
-                System.out.println("Karakter: "+this.getName()+"\tHasar: "+this.getDamage()+"\tSağlık: "+this.getHealth()+"\tPara: "+this.getMoney());
+                System.out.println("Lütfen bir karakter seçmek için ilgili karakterin id değerini giriniz !");
                 break;
         }
         System.out.println("=========================================================================");
@@ -167,6 +165,7 @@ public class Player {
                     break;
                 default:
                     System.out.println("Lütfen geçerli bir bölge id'değeri giriniz !");
+                    break;
             }
             if (location == null) {
                 System.out.println("Bu karanlık ve sisli adadan çabuk vazgeçtin !");
